@@ -14,14 +14,16 @@ import {
 describe('ts tests', () => {
   it('get greeting', () => {
     // arrange
-    const birthYear = 1972; // Changed to number
+    const birthYear = 1972; 
     const name = 'Marcus';
+    const currentYear = new Date().getFullYear(); // Get the current year
+    const expectedAge = currentYear - birthYear; // Calculate expected age dynamically
 
     // act
     const result = greet(name, birthYear);
 
     // assert
-    assert.strictEqual(result, 'Hello Marcus, you are 51 years old');
+    assert.strictEqual(result, `Hello ${name}, you are ${expectedAge} years old`); // Use dynamic expected value
   });
 
   it('returns true if age is above or equal to 35', () => {

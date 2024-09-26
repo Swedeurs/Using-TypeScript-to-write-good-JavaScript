@@ -1,48 +1,49 @@
-// Define the Address type
+// index.ts
+
 type Address = {
   street: string;
   streetNo: number;
   city: string;
 };
 
-// Define the Person type
 type Person = {
   name: string;
   birthYear: number;
   address: Address;
 };
 
-// Function to greet a person
 function greet(name: string, birthYear: number): string {
-  const age = new Date().getFullYear() - birthYear; // Calculate age
-  return `Hello ${name}, you are ${age} years old`; // Return greeting message
+  const age = new Date().getFullYear() - birthYear; // Calculate age based on current year
+  return `Hello ${name}, you are ${age} years old`;
 }
 
-// Function to check if a person is old
 function isOld(age: number): boolean {
-  return age >= 35; // Returns true if age is 35 or older
+  return age >= 35;
 }
 
-// Function to count odd numbers in an array
 function countOdd(arr: number[]): number {
-  return arr.filter((num) => num % 2 !== 0).length; // Count odd numbers in the array
+  return arr.filter((num) => num % 2 !== 0).length;
 }
 
-// Function to sum even numbers in an array
 function sumEven(arr: number[]): number {
-  return arr.filter((num) => num % 2 === 0) // Filter even numbers
-            .reduce((acc, num) => acc + num, 0); // Sum the even numbers
+  return arr.filter((num) => num % 2 === 0).reduce((sum, num) => sum + num, 0);
 }
 
-// Function to check if a number is divisible by 3
 function isDivisibleByThree(num: number): boolean {
-  return num % 3 === 0; // Returns true if num is divisible by 3
+  return num % 3 === 0;
 }
 
-// New function to get the street number for a Person
 function getPersonStreetNo(person: Person): number {
-  return person.address.streetNo; // Return the street number from the address
+  return person.address.streetNo; // Return the street number from the person's address
 }
 
-// Exporting all functions and types
-export { greet, isOld, countOdd, sumEven, isDivisibleByThree, getPersonStreetNo, Address, Person };
+export { 
+  greet, 
+  isOld, 
+  countOdd, 
+  sumEven, 
+  isDivisibleByThree, 
+  getPersonStreetNo, 
+  Address, 
+  Person 
+};
