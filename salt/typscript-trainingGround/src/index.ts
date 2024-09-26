@@ -39,5 +39,10 @@ function isDivisibleByThree(num: number): boolean {
   return num % 3 === 0; // Returns true if num is divisible by 3
 }
 
+// New function to get the street number for a Person
+function getPersonStreetNo(person: Person): number {
+  return person.address.streetNo; // Return the street number from the address
+}
+
 // Exporting all functions and types
-export { greet, isOld, countOdd, sumEven, isDivisibleByThree, Address, Person };
+export { greet, isOld, countOdd, sumEven, isDivisibleByThree, getPersonStreetNo, Address, Person };
