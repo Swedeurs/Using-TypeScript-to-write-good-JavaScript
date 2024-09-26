@@ -27,3 +27,20 @@ describe('ts tests', () => {
     assert.strictEqual(is36OldResult, true);  // 36 is considered "old"
   });
 });
+
+it("fun with variables", () => {
+  // act
+  let name: string = "Marcus";
+  let nameImplicit = "Marcus";
+  let nameImplicit2 = name;
+
+  const cool: boolean = true;
+  const birthYear = 1972;
+
+  // arrange
+  assert.strictEqual(typeof cool, "boolean");
+  assert.strictEqual(typeof birthYear, "number");
+  assert.strictEqual(typeof name, "string");
+  assert.strictEqual(typeof nameImplicit, "string");
+  assert.strictEqual(typeof nameImplicit2, "string");
+});
