@@ -1,6 +1,6 @@
 import 'mocha';
 import assert from 'assert';
-import { greet } from './index';
+import { greet, is34Old } from './index'; // Importing both greet and is34Old
 
 describe('ts tests', () => {
   it('get greeting', () => {
@@ -14,15 +14,16 @@ describe('ts tests', () => {
     // assert
     assert.strictEqual(result, 'Hello Marcus, you are 51 years old');
   });
-});
-it("returns true if age is above or equal to 35", () => {
-  // act
-  const is34Old = isOld(34);
-  const is35Old = isOld(35);
-  const is36Old = isOld(36);
 
-  // assert
-  assert.strictEqual(is34Old, false);
-  assert.strictEqual(is35Old, true);
-  assert.strictEqual(is36Old, true);
+  it('returns true if age is above or equal to 35', () => {
+    // act
+    const is34OldResult = is34Old(34);
+    const is35OldResult = is34Old(35);
+    const is36OldResult = is34Old(36);
+
+    // assert
+    assert.strictEqual(is34OldResult, false); // 34 is not considered "old"
+    assert.strictEqual(is35OldResult, true);  // 35 is considered "old"
+    assert.strictEqual(is36OldResult, true);  // 36 is considered "old"
+  });
 });
