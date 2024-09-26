@@ -1,6 +1,6 @@
 import 'mocha';
 import assert from 'assert';
-import { greet, isOld, countOdd } from './index';
+import { greet, isOld, countOdd, isDivisibleByThree } from './index';
 
 describe('TypeScript Tests', () => {
   it('get greeting', () => {
@@ -53,7 +53,6 @@ describe('TypeScript Tests', () => {
     assert.strictEqual(firstFive.length, 5); // Check that there are five numbers
   });
 
-  // New test for countOdd function
   it('counts the odd numbers in an array', () => {
     const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const result = countOdd(numbers);
@@ -70,5 +69,13 @@ describe('TypeScript Tests', () => {
     const numbers = [-3, -2, -1, 0, 1, 2, 3];
     const result = countOdd(numbers);
     assert.strictEqual(result, 4); // Odd numbers: -3, -1, 1, 3
+  });
+
+  // New test for isDivisibleByThree function
+  it('checks if a number is divisible by 3', () => {
+    assert.strictEqual(isDivisibleByThree(3), true);  // 3 is divisible by 3
+    assert.strictEqual(isDivisibleByThree(4), false); // 4 is not divisible by 3
+    assert.strictEqual(isDivisibleByThree(0), true);  // 0 is divisible by 3
+    assert.strictEqual(isDivisibleByThree(-3), true); // -3 is divisible by 3
   });
 });
