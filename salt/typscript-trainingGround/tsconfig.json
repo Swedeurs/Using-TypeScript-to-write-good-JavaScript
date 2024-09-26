@@ -4,7 +4,10 @@
     "moduleResolution": "NodeNext",
     "sourceMap": true,
     "target": "ES2015",
-    "outDir": "dist"
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "index.test.ts"], // Make sure to include your test files
+  "exclude": ["node_modules"]
 }
