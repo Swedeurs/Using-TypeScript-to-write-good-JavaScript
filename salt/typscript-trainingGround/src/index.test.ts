@@ -1,131 +1,98 @@
-
-type Address = {
-  street: string;
-  streetNo: number;
-  city: string;
-};
-
-type Person = {
-  name: string;
-  birthYear: number;
-  address: Address;
-};
-
-interface IPerson {
-  name: string;
-  birthYear: number;
-}
-
-type Order = {
-  orderId: number;  
-  totalAmount: number;
-};
+import assert from "assert";
+import { IPerson, Address, Order, addToStart, Wrapper, getPersonNameString } from "./index"; 
 
 
-const addToStart = <T>(list: T[], itemToAdd: T): T[] => {
-  return [itemToAdd, ...list];
-};
+describe("Person Tests", () => {
+  it("should return person's name and birth year", () => {
+    const person: IPerson = { name: "Marcus", birthYear: 1972 };
+    const result = getPersonNameString(person);
+    assert.strictEqual(result, "Marcus, 1972");
+  });
+});
 
 
-class Wrapper<T> {
-  private list: T[];
+describe("Address Tests", () => {
+  it("should correctly represent address", () => {
+    const address: Address = { street: "Strålgatan", streetNo: 23, city: "Stockholm" };
+    assert.strictEqual(address.street, "Strålgatan");
+    assert.strictEqual(address.streetNo, 23);
+    assert.strictEqual(address.city, "Stockholm");
+  });
+});
 
-  constructor(list: T[]) {
-    this.list = list;
-  }
+// Tests for Order
+describe("Order Tests", () => {
+  it("should correctly represent order", () => {
+    const order: Order = { orderId: 12345, totalAmount: 299.99 }; // Ensure orderId is a number
+    assert.strictEqual(order.orderId, 12345);
+    assert.strictEqual(order.totalAmount, 299.99);
+  });
+});
 
-  public getFirst(): T {
-    return this.list[0];
-  }
+// Tests for Generics
+describe("Generics Tests", () => {
+  it("add to list of people", () => {
+    // arrange
+    const listOfPeople: IPerson[] = [{ name: "Marcus", birthYear: 1972 }];
 
-  public getLast(): T {
-    return this.list[this.list.length - 1];
-  }
-}
+    // act
+    const numberOfPeople = addToStart<IPerson>(listOfPeople, {
+      name: "David",
+      birthYear: 1975,
+    });
 
-const greet = (name: string, birthYear: number): string => 
-  `Hello ${name}, you are ${new Date().getFullYear() - birthYear} years old`;
+    // assert
+    assert.strictEqual(numberOfPeople[0].name, "David");
+    assert.strictEqual(numberOfPeople[1].name, "Marcus");
+  });
 
-const isOld = (age: number): boolean => age >= 35;
+  it("add to list of addresses", () => {
+    // arrange
+    const listOfAddresses: Address[] = [
+      { street: "Strålgatan", streetNo: 23, city: "Stockholm" },
+      { street: "SchraeschazschStrasse", streetNo: 2, city: "Amsterdam" },
+    ];
 
-const countOdd = (arr: number[]): number => arr.filter((num) => num % 2 !== 0).length;
+    // act
+    const numberOfAddresses = addToStart<Address>(listOfAddresses, {
+      street: "Champs Elysee",
+      streetNo: 1,
+      city: "Paris",
+    });
 
-const sumEven = (arr: number[]): number => 
-  arr.filter((num) => num % 2 === 0).reduce((sum, num) => sum + num, 0);
+    // assert
+    assert.strictEqual(numberOfAddresses[0].city, "Paris");
+    assert.strictEqual(numberOfAddresses[1].city, "Stockholm");
+  });
 
-const isDivisibleByThree = (num: number): boolean => num % 3 === 0;
+  it("wrapper for addresses", () => {
+    // arrange
+    const listOfAddresses: Address[] = [
+      { street: "Strålgatan", streetNo: 23, city: "Stockholm" },
+      { street: "SchraeschazschStrasse", streetNo: 2, city: "Amsterdam" },
+      { street: "Champs Elysee", streetNo: 1, city: "Paris" },
+    ];
 
-const getPersonStreetNo = (person: Person): number => person.address.streetNo;
+    // act
+    const list = new Wrapper<Address>(listOfAddresses);
 
-const getPersonNameString = (p: IPerson) => `${p.name}, ${p.birthYear.toString()}`;
+    // assert
+    assert.strictEqual(list.getFirst().city, "Stockholm");
+    assert.strictEqual(list.getLast().city, "Paris");
+  });
 
-const optionallyAdd = (
-  num1: number, 
-  num2: number, 
-  num3: number = 0, 
-  num4: number = 0, 
-  num5: number = 0
-): number => num1 + num2 + num3 + num4 + num5;
+  it("wrapper for people", () => {
+    // arrange
+    const listOfPeople: IPerson[] = [
+      { name: "Marcus", birthYear: 1972 },
+      { name: "David", birthYear: 1975 },
+    ];
 
-const greetPeople = (greeting: string, ...names: string[]): string => 
-  `${greeting} ${names.join(' and ')}`.trim();
+    // act
+    const peopleList = new Wrapper<IPerson>(listOfPeople);
 
-const printThis = (thing: Person | Address | Order | null | undefined): string => {
-  if (!thing) return "no person supplied";
-  
-  if ('name' in thing) {
-    return `Person: ${thing.name}, Age: ${new Date().getFullYear() - thing.birthYear}`;
-  } else if ('street' in thing) {
-    return `Address: ${thing.street}, No: ${thing.streetNo.toString()}, City: ${thing.city}`;
-  } else if ('orderId' in thing) {
-    return `Order ID: ${thing.orderId}, Total: $${thing.totalAmount.toString()}`;
-  } else {
-    return "Unknown type!";
-  }
-};
-
-class PersonClass {
-  private name: string;
-  private birthYear: number;
-
-  constructor(name: string, birthYear: number) {
-    this.name = name;
-    this.birthYear = birthYear;
-  }
-
-  getAge = (): number => new Date().getFullYear() - this.birthYear;
-
-  getName = (): string => this.name;
-
-  greet = (): string => `Hello ${this.getName()}, you are ${this.getAge()} years old`;
-}
-
-class EmployeeClass extends PersonClass {
-  employeeId: number = -1;
-
-  constructor(name: string, birthYear: number) {
-    super(name, birthYear);
-  }
-}
-
-
-export { 
-  greet, 
-  isOld, 
-  countOdd, 
-  sumEven, 
-  isDivisibleByThree, 
-  getPersonStreetNo, 
-  Address, 
-  Person, 
-  PersonClass, 
-  EmployeeClass, 
-  getPersonNameString, 
-  optionallyAdd, 
-  greetPeople, 
-  printThis, 
-  IPerson,   
-  Order,
-  addToStart, 
-  Wrapper 
-};  
+    // assert
+    assert.strictEqual(peopleList.getFirst().name, "Marcus");
+    assert.strictEqual(peopleList.getLast().name, "David");
+  });
+});

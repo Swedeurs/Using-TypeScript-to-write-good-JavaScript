@@ -26,8 +26,27 @@ const addToStart = <T>(list: T[], itemToAdd: T): T[] => {
   return [itemToAdd, ...list];
 };
 
+
+class Wrapper<T> {
+  private list: T[];
+
+  constructor(list: T[]) {
+    this.list = list;
+  }
+
+  public getFirst(): T {
+    return this.list[0];
+  }
+
+  public getLast(): T {
+    return this.list[this.list.length - 1];
+  }
+}
+
+
 const greet = (name: string, birthYear: number): string => 
   `Hello ${name}, you are ${new Date().getFullYear() - birthYear} years old`;
+
 
 const isOld = (age: number): boolean => age >= 35;
 
@@ -67,6 +86,7 @@ const printThis = (thing: Person | Address | Order | null | undefined): string =
   }
 };
 
+
 class PersonClass {
   private name: string;
   private birthYear: number;
@@ -83,6 +103,7 @@ class PersonClass {
   greet = (): string => `Hello ${this.getName()}, you are ${this.getAge()} years old`;
 }
 
+
 class EmployeeClass extends PersonClass {
   employeeId: number = -1;
 
@@ -94,20 +115,20 @@ class EmployeeClass extends PersonClass {
 
 export { 
   greet, 
-  isOld, 
-  countOdd, 
-  sumEven, 
-  isDivisibleByThree, 
-  getPersonStreetNo, 
+  IPerson, 
   Address, 
-  Person, 
-  PersonClass, 
-  EmployeeClass, 
+  Order, 
+  addToStart, 
+  Wrapper, 
   getPersonNameString, 
   optionallyAdd, 
   greetPeople, 
   printThis, 
-  IPerson,   
-  Order,
-  addToStart 
-};  
+  PersonClass, 
+  EmployeeClass,
+  isOld,
+  countOdd,
+  sumEven,
+  isDivisibleByThree,
+  getPersonStreetNo
+};
