@@ -108,7 +108,7 @@ class EmployeeClass extends PersonClass {
   }
 }
 
-// Export all necessary items
+
 export { 
   greet, 
   isOld, 
