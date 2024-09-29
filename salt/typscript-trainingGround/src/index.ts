@@ -40,6 +40,9 @@ export const getPersonStreetNo = (person: Person): number => person.address.stre
 
 export const getPersonNameString = (p: IPerson) => `${p.name}, ${p.birthYear.toString()}`;
 
+const addToStart = <T>(list: T[], itemToAdd: T): T[] => {
+  return [itemToAdd, ...list];
+};
 
 export const optionallyAdd = (
   num1: number, 
