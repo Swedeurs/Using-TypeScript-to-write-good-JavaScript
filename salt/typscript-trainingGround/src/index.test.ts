@@ -10,8 +10,8 @@ import {
   getPersonNameString, 
   PersonClass, 
   EmployeeClass, 
-  IPerson,   // Import IPerson
-  Person     // Import Person
+  IPerson,
+  Person     
 } from './index';
 
 describe('ts tests', () => {
