@@ -57,7 +57,7 @@ describe('ts tests', () => {
     assert.strictEqual(isDivisibleByThree(0), true);  // 0 is divisible by 3
   });
 
-  // Test for getPersonStreetNo
+
   it('gets person street number', () => {
     const person: Person = { 
       name: 'Marcus', 
@@ -69,7 +69,7 @@ describe('ts tests', () => {
     assert.strictEqual(result, 123);
   });
 
-  // Test for printThis with union types (Person, Address, Order, null, undefined)
+ 
   it("handles different types in printThis", () => {
     const person: Person = { 
       name: 'Alice', 
@@ -79,14 +79,14 @@ describe('ts tests', () => {
     const address: Address = { street: 'Main St', streetNo: 789, city: 'Springfield' };
     const order: Order = { orderId: 12345, totalAmount: 299.99 };
 
-    // act
+
     const resultPerson = printThis(person);
     const resultAddress = printThis(address);
     const resultOrder = printThis(order);
     const resultNull = printThis(null);
     const resultUndefined = printThis(undefined);
 
-    // assert
+
     assert.strictEqual(resultPerson, `Person: Alice, Age: ${new Date().getFullYear() - 1990}`);
     assert.strictEqual(resultAddress, 'Address: Main St, No: 789, City: Springfield');
     assert.strictEqual(resultOrder, 'Order ID: 12345, Total: $299.99');
@@ -94,5 +94,5 @@ describe('ts tests', () => {
     assert.strictEqual(resultUndefined, 'no person supplied');
   });
   
-  // Other tests for PersonClass and EmployeeClass...
+
 });
