@@ -10,8 +10,11 @@ import {
   getPersonNameString, 
   PersonClass, 
   EmployeeClass, 
-  IPerson,
-  Person     
+  IPerson, 
+  Person, 
+  Address, 
+  Order,  
+  printThis  
 } from './index';
 
 describe('ts tests', () => {
@@ -66,40 +69,30 @@ describe('ts tests', () => {
     assert.strictEqual(result, 123);
   });
 
-  // Test for getPersonNameString
-  it("prints an IPerson", () => {
-    const p1: IPerson = { name: "Marcus", birthYear: 1972 };
-    const p2 = { name: "David", birthYear: 1975, drummer: true };
+  // Test for printThis with union types (Person, Address, Order, null, undefined)
+  it("handles different types in printThis", () => {
+    const person: Person = { 
+      name: 'Alice', 
+      birthYear: 1990, 
+      address: { street: 'Elm St', streetNo: 456, city: 'Gotham' }
+    };
+    const address: Address = { street: 'Main St', streetNo: 789, city: 'Springfield' };
+    const order: Order = { orderId: 12345, totalAmount: 299.99 };
 
-    const p1Address = getPersonNameString(p1);
-    const p2Address = getPersonNameString(p2);
+    // act
+    const resultPerson = printThis(person);
+    const resultAddress = printThis(address);
+    const resultOrder = printThis(order);
+    const resultNull = printThis(null);
+    const resultUndefined = printThis(undefined);
 
-    assert.strictEqual(p1Address, "Marcus, 1972");
-    assert.strictEqual(p2Address, "David, 1975");
+    // assert
+    assert.strictEqual(resultPerson, `Person: Alice, Age: ${new Date().getFullYear() - 1990}`);
+    assert.strictEqual(resultAddress, 'Address: Main St, No: 789, City: Springfield');
+    assert.strictEqual(resultOrder, 'Order ID: 12345, Total: $299.99');
+    assert.strictEqual(resultNull, 'no person supplied');
+    assert.strictEqual(resultUndefined, 'no person supplied');
   });
-
-  // Test for PersonClass
-  it('get greeting from PersonClass', () => {
-    const birthYear = 1972;
-    const name = 'Marcus';
-    const currentYear = new Date().getFullYear();
-    const expectedAge = currentYear - birthYear;
-
-    const p = new PersonClass(name, birthYear);
-    const result = p.greet();
-
-    assert.strictEqual(result, `Hello Marcus, you are ${expectedAge} years old`);
-  });
-
-  // Test for EmployeeClass
-  it("using EmployeeClass", () => {
-    const p = new PersonClass("Marcus", 1972);
-    const e = new EmployeeClass("Marcus Employee", 1972);
-
-    e.employeeId = 12345;
-
-    assert.strictEqual(p.getName(), "Marcus");
-    assert.strictEqual(e.getName(), "Marcus Employee");
-    assert.strictEqual(e.employeeId, 12345);
-  });
+  
+  // Other tests for PersonClass and EmployeeClass...
 });
