@@ -80,6 +80,7 @@ export class PersonClass {
     this.name = name;
     this.birthYear = birthYear;
   }
+  
 
   getAge = (): number => new Date().getFullYear() - this.birthYear;
 
@@ -95,6 +96,22 @@ export class EmployeeClass extends PersonClass {
     super(name, birthYear);
   }
 }
+class Wrapper<T> {
+  private list: T[];
+
+  constructor(list: T[]) {
+    this.list = list;
+  }
+
+  public getFirst(): T {
+    return this.list[0];
+  }
+
+  public getLast(): T {
+    return this.list[this.list.length - 1];
+  }
+}
+
 
 
 export { IPerson, Order };
