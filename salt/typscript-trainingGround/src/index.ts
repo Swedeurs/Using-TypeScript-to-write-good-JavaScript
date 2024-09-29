@@ -34,10 +34,9 @@ function printThis(thing: Person | Address | Order | null | undefined): string {
 }
 
 // Other utility functions
-function greet(name: string, birthYear: number): string {
-  const age = new Date().getFullYear() - birthYear;
-  return `Hello ${name}, you are ${age} years old`;
-}
+const greet = (name: string, birthYear: number): string => 
+  `Hello ${name}, you are ${new Date().getFullYear() - birthYear} years old`;
+
 
 function isOld(age: number): boolean {
   return age >= 35;
