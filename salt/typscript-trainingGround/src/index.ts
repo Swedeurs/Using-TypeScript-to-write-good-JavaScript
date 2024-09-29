@@ -1,4 +1,4 @@
-// Types
+
 type Address = {
   street: string;
   streetNo: number;
@@ -21,7 +21,7 @@ type Order = {
   totalAmount: number;
 };
 
-// Function to add an item to the start of an array
+
 const addToStart = <T>(list: T[], itemToAdd: T): T[] => {
   return [itemToAdd, ...list];
 };
@@ -91,7 +91,7 @@ class EmployeeClass extends PersonClass {
   }
 }
 
-// Export all necessary items
+
 export { 
   greet, 
   isOld, 
@@ -109,5 +109,5 @@ export {
   printThis, 
   IPerson,   
   Order,
-  addToStart // Export the addToStart function
+  addToStart 
 };  

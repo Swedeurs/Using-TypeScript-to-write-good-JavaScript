@@ -1,4 +1,4 @@
-// Types
+
 type Address = {
   street: string;
   streetNo: number;
@@ -21,12 +21,12 @@ type Order = {
   totalAmount: number;
 };
 
-// Function to add an item to the start of an array
+
 const addToStart = <T>(list: T[], itemToAdd: T): T[] => {
   return [itemToAdd, ...list];
 };
 
-// Wrapper class to encapsulate a list of items of any type
+
 class Wrapper<T> {
   private list: T[];
 
@@ -126,6 +126,6 @@ export {
   printThis, 
   IPerson,   
   Order,
-  addToStart, // Export the addToStart function
-  Wrapper // Export the Wrapper class
+  addToStart, 
+  Wrapper 
 };  
