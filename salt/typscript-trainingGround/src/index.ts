@@ -11,7 +11,29 @@ type Person = {
   address: Address;
 };
 
-// Function implementations
+type Order = {
+  orderId: number;
+  totalAmount: number;
+};
+
+
+function printThis(thing: Person | Address | Order | null | undefined): string {
+  if (!thing) {
+    return "no person supplied";
+  }
+
+  if ("name" in thing) {
+    return `Person: ${thing.name}, Age: ${new Date().getFullYear() - thing.birthYear}`;
+  } else if ("street" in thing) {
+    return `Address: ${thing.street}, No: ${thing.streetNo}, City: ${thing.city}`;
+  } else if ("orderId" in thing) {
+    return `Order ID: ${thing.orderId}, Total: $${thing.totalAmount}`;
+  } else {
+    return "Unknown type!";
+  }
+}
+
+// Other utility functions
 function greet(name: string, birthYear: number): string {
   const age = new Date().getFullYear() - birthYear;
   return `Hello ${name}, you are ${age} years old`;
@@ -41,7 +63,6 @@ function getPersonNameString(p: IPerson): string {
   return `${p.name}, ${p.birthYear}`;
 }
 
-// Interface and class definitions
 interface IPerson {
   name: string;
   birthYear: number;
@@ -77,7 +98,7 @@ class EmployeeClass extends PersonClass {
   }
 }
 
-// Exporting all necessary functions and types
+// Export everything
 export { 
   greet, 
   isOld, 
@@ -88,7 +109,9 @@ export {
   getPersonNameString, 
   Address, 
   Person, 
-  IPerson,
+  Order,  
+  IPerson, 
   PersonClass, 
-  EmployeeClass 
+  EmployeeClass,
+  printThis  
 };
