@@ -7,99 +7,99 @@ import {
   sumEven, 
   isDivisibleByThree, 
   getPersonStreetNo, 
-  Address, 
-  Person 
+  getPersonNameString, 
+  PersonClass, 
+  EmployeeClass, 
+  IPerson,   // Import IPerson
+  Person     // Import Person
 } from './index';
 
 describe('ts tests', () => {
+
   it('get greeting', () => {
-    // arrange
     const birthYear = 1972; 
     const name = 'Marcus';
-    const currentYear = new Date().getFullYear(); // Get the current year
-    const expectedAge = currentYear - birthYear; // Calculate expected age dynamically
+    const currentYear = new Date().getFullYear(); 
+    const expectedAge = currentYear - birthYear;
 
-    // act
     const result = greet(name, birthYear);
-
-    // assert
-    assert.strictEqual(result, `Hello ${name}, you are ${expectedAge} years old`); // Use dynamic expected value
+    assert.strictEqual(result, `Hello ${name}, you are ${expectedAge} years old`);
   });
 
   it('returns true if age is above or equal to 35', () => {
-    // act
-    const is34OldResult = isOld(34);
-    const is35OldResult = isOld(35);
-    const is36OldResult = isOld(36);
-
-    // assert
-    assert.strictEqual(is34OldResult, false); // 34 is not considered "old"
-    assert.strictEqual(is35OldResult, true);  // 35 is considered "old"
-    assert.strictEqual(is36OldResult, true);  // 36 is considered "old"
+    assert.strictEqual(isOld(34), false);
+    assert.strictEqual(isOld(35), true);
+    assert.strictEqual(isOld(36), true);
   });
 
-  it("fun with variables", () => {
-    // act
-    let name: string = "Marcus";
-    let nameImplicit = "Marcus";
-    let nameImplicit2 = name;
-
-    const cool: boolean = true;
-    const birthYear = 1972;
-
-    // arrange
-    assert.strictEqual(typeof cool, "boolean");
-    assert.strictEqual(typeof birthYear, "number");
-    assert.strictEqual(typeof name, "string");
-    assert.strictEqual(typeof nameImplicit, "string");
-    assert.strictEqual(typeof nameImplicit2, "string");
+  // Test for countOdd
+  it('counts odd numbers in array', () => {
+    assert.strictEqual(countOdd([1, 2, 3, 4, 5]), 3); // 1, 3, 5 are odd
+    assert.strictEqual(countOdd([2, 4, 6]), 0);       // No odd numbers
+    assert.strictEqual(countOdd([]), 0);              // Empty array
   });
 
-  it("arrays are typed in ts", () => {
-    const names: string[] = ["Marcus", "Julia", "Catherine"];
-    const firstFive: number[] = [1, 2, 3, 4, 5];
+  // Test for sumEven
+  it('sums even numbers in array', () => {
+    assert.strictEqual(sumEven([1, 2, 3, 4, 5]), 6);  // 2 + 4 = 6
+    assert.strictEqual(sumEven([2, 4, 6]), 12);       // 2 + 4 + 6 = 12
+    assert.strictEqual(sumEven([1, 3, 5]), 0);        // No even numbers
   });
 
-  it("counts odd numbers in an array", () => {
-    const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-    const count = countOdd(nums);
-
-    assert.strictEqual(count, 5); // There are 5 odd numbers: 1, 3, 5, 7, 9
+  // Test for isDivisibleByThree
+  it('checks if a number is divisible by three', () => {
+    assert.strictEqual(isDivisibleByThree(3), true);
+    assert.strictEqual(isDivisibleByThree(9), true);
+    assert.strictEqual(isDivisibleByThree(4), false);
+    assert.strictEqual(isDivisibleByThree(0), true);  // 0 is divisible by 3
   });
 
-  it("sums even numbers in an array", () => {
-    // arrange
-    const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-    // act
-    const sum = sumEven(nums);
-
-    // assert
-    assert.strictEqual(sum, 30); // The sum of even numbers (2 + 4 + 6 + 8 + 10) is 30
-  });
-
-  it("checks if a number is divisible by 3", () => {
-    assert.strictEqual(isDivisibleByThree(9), true); // 9 is divisible by 3
-    assert.strictEqual(isDivisibleByThree(10), false); // 10 is not divisible by 3
-  });
-
-  it("gets the street number for a person", () => {
-    // arrange
-    const p: Person = {
-      name: "Marcus",
-      birthYear: 1972,
-      address: {
-        street: "Strålgatan",
-        streetNo: 23,
-        city: "Stockholm",
-      },
+  // Test for getPersonStreetNo
+  it('gets person street number', () => {
+    const person: Person = { 
+      name: 'Marcus', 
+      birthYear: 1972, 
+      address: { street: 'Main St', streetNo: 123, city: 'Cityville' }
     };
 
-    // act
-    const streetNo = getPersonStreetNo(p);
+    const result = getPersonStreetNo(person);
+    assert.strictEqual(result, 123);
+  });
 
-    // assert
-    assert.strictEqual(streetNo, 23); // Check that the street number is correct
+  // Test for getPersonNameString
+  it("prints an IPerson", () => {
+    const p1: IPerson = { name: "Marcus", birthYear: 1972 };
+    const p2 = { name: "David", birthYear: 1975, drummer: true };
+
+    const p1Address = getPersonNameString(p1);
+    const p2Address = getPersonNameString(p2);
+
+    assert.strictEqual(p1Address, "Marcus, 1972");
+    assert.strictEqual(p2Address, "David, 1975");
+  });
+
+  // Test for PersonClass
+  it('get greeting from PersonClass', () => {
+    const birthYear = 1972;
+    const name = 'Marcus';
+    const currentYear = new Date().getFullYear();
+    const expectedAge = currentYear - birthYear;
+
+    const p = new PersonClass(name, birthYear);
+    const result = p.greet();
+
+    assert.strictEqual(result, `Hello Marcus, you are ${expectedAge} years old`);
+  });
+
+  // Test for EmployeeClass
+  it("using EmployeeClass", () => {
+    const p = new PersonClass("Marcus", 1972);
+    const e = new EmployeeClass("Marcus Employee", 1972);
+
+    e.employeeId = 12345;
+
+    assert.strictEqual(p.getName(), "Marcus");
+    assert.strictEqual(e.getName(), "Marcus Employee");
+    assert.strictEqual(e.employeeId, 12345);
   });
 });

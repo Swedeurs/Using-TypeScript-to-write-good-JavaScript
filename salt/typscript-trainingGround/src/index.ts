@@ -1,5 +1,4 @@
-// index.ts
-
+// Type definitions
 type Address = {
   street: string;
   streetNo: number;
@@ -12,8 +11,9 @@ type Person = {
   address: Address;
 };
 
+// Function implementations
 function greet(name: string, birthYear: number): string {
-  const age = new Date().getFullYear() - birthYear; // Calculate age based on current year
+  const age = new Date().getFullYear() - birthYear;
   return `Hello ${name}, you are ${age} years old`;
 }
 
@@ -34,9 +34,50 @@ function isDivisibleByThree(num: number): boolean {
 }
 
 function getPersonStreetNo(person: Person): number {
-  return person.address.streetNo; // Return the street number from the person's address
+  return person.address.streetNo;
 }
 
+function getPersonNameString(p: IPerson): string {
+  return `${p.name}, ${p.birthYear}`;
+}
+
+// Interface and class definitions
+interface IPerson {
+  name: string;
+  birthYear: number;
+}
+
+class PersonClass {
+  private name: string;
+  private birthYear: number;
+
+  constructor(name: string, birthYear: number) {
+    this.name = name;
+    this.birthYear = birthYear;
+  }
+
+  getAge(): number {
+    return new Date().getFullYear() - this.birthYear;
+  }
+
+  getName(): string {
+    return this.name;
+  }
+
+  greet(): string {
+    return `Hello ${this.getName()}, you are ${this.getAge()} years old`;
+  }
+}
+
+class EmployeeClass extends PersonClass {
+  employeeId: number = -1;
+
+  constructor(name: string, birthYear: number) {
+    super(name, birthYear);
+  }
+}
+
+// Exporting all necessary functions and types
 export { 
   greet, 
   isOld, 
@@ -44,6 +85,10 @@ export {
   sumEven, 
   isDivisibleByThree, 
   getPersonStreetNo, 
+  getPersonNameString, 
   Address, 
-  Person 
+  Person, 
+  IPerson,
+  PersonClass, 
+  EmployeeClass 
 };
