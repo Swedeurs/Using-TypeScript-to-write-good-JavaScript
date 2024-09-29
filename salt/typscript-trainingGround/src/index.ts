@@ -23,26 +23,25 @@ type Order = {
 };
 
 
-
-const greet = (name: string, birthYear: number): string => 
+export const greet = (name: string, birthYear: number): string => 
   `Hello ${name}, you are ${new Date().getFullYear() - birthYear} years old`;
 
-const isOld = (age: number): boolean => age >= 35;
+export const isOld = (age: number): boolean => age >= 35;
 
-const countOdd = (arr: number[]): number => arr.filter((num) => num % 2 !== 0).length;
+export const countOdd = (arr: number[]): number => arr.filter((num) => num % 2 !== 0).length;
 
-const sumEven = (arr: number[]): number => 
+export const sumEven = (arr: number[]): number => 
   arr.filter((num) => num % 2 === 0).reduce((sum, num) => sum + num, 0);
 
-const isDivisibleByThree = (num: number): boolean => num % 3 === 0;
+export const isDivisibleByThree = (num: number): boolean => num % 3 === 0;
 
-const getPersonStreetNo = (person: Person): number => person.address.streetNo;
-
-
-const getPersonNameString = (p: IPerson) => `${p.name}, ${p.birthYear.toString()}`;
+export const getPersonStreetNo = (person: Person): number => person.address.streetNo;
 
 
-const optionallyAdd = (
+export const getPersonNameString = (p: IPerson) => `${p.name}, ${p.birthYear.toString()}`;
+
+
+export const optionallyAdd = (
   num1: number, 
   num2: number, 
   num3: number = 0, 
@@ -51,11 +50,11 @@ const optionallyAdd = (
 ): number => num1 + num2 + num3 + num4 + num5;
 
 
-const greetPeople = (greeting: string, ...names: string[]): string => 
+export const greetPeople = (greeting: string, ...names: string[]): string => 
   `${greeting} ${names.join(' and ')}`.trim();
 
 
-const printThis = (thing: Person | Address | Order | null | undefined): string => {
+export const printThis = (thing: Person | Address | Order | null | undefined): string => {
   if (!thing) return "no person supplied";
   
   if ('name' in thing) {
@@ -70,8 +69,7 @@ const printThis = (thing: Person | Address | Order | null | undefined): string =
 };
 
 
-
-class PersonClass {
+export class PersonClass {
   private name: string;
   private birthYear: number;
 
@@ -87,7 +85,7 @@ class PersonClass {
   greet = (): string => `Hello ${this.getName()}, you are ${this.getAge()} years old`;
 }
 
-class EmployeeClass extends PersonClass {
+export class EmployeeClass extends PersonClass {
   employeeId: number = -1;
 
   constructor(name: string, birthYear: number) {
@@ -96,21 +94,4 @@ class EmployeeClass extends PersonClass {
 }
 
 
-export { 
-  greet, 
-  isOld, 
-  countOdd, 
-  sumEven, 
-  isDivisibleByThree, 
-  getPersonStreetNo, 
-  Address, 
-  Person, 
-  PersonClass, 
-  EmployeeClass, 
-  getPersonNameString, 
-  optionallyAdd, 
-  greetPeople, 
-  printThis, 
-  IPerson,   
-  Order      
-};
+export { IPerson, Order };

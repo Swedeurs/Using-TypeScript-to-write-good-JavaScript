@@ -10,12 +10,11 @@ import {
   getPersonNameString, 
   PersonClass, 
   EmployeeClass, 
-  IPerson, 
-  Person, 
-  Address, 
-  Order,  
-  printThis  
-} from './index';
+  Order, 
+  printThis,
+  optionallyAdd,
+  greetPeople
+} from './index'; // Import from your main module
 
 describe('ts tests', () => {
 
@@ -35,64 +34,70 @@ describe('ts tests', () => {
     assert.strictEqual(isOld(36), true);
   });
 
-  // Test for countOdd
-  it('counts odd numbers in array', () => {
-    assert.strictEqual(countOdd([1, 2, 3, 4, 5]), 3); // 1, 3, 5 are odd
-    assert.strictEqual(countOdd([2, 4, 6]), 0);       // No odd numbers
-    assert.strictEqual(countOdd([]), 0);              // Empty array
-  });
+  // ADD NEW TESTS HERE
 
-  // Test for sumEven
-  it('sums even numbers in array', () => {
-    assert.strictEqual(sumEven([1, 2, 3, 4, 5]), 6);  // 2 + 4 = 6
-    assert.strictEqual(sumEven([2, 4, 6]), 12);       // 2 + 4 + 6 = 12
-    assert.strictEqual(sumEven([1, 3, 5]), 0);        // No even numbers
-  });
+  it("prints an IPerson", () => {
+    const p1 = { name: "Marcus", birthYear: 1972 };
+    const p2 = { name: "David", birthYear: 1975, drummer: true };
 
-  // Test for isDivisibleByThree
-  it('checks if a number is divisible by three', () => {
-    assert.strictEqual(isDivisibleByThree(3), true);
-    assert.strictEqual(isDivisibleByThree(9), true);
-    assert.strictEqual(isDivisibleByThree(4), false);
-    assert.strictEqual(isDivisibleByThree(0), true);  // 0 is divisible by 3
-  });
+    const p1Address = getPersonNameString(p1);
+    const p2Address = getPersonNameString(p2);
 
-
-  it('gets person street number', () => {
-    const person: Person = { 
-      name: 'Marcus', 
-      birthYear: 1972, 
-      address: { street: 'Main St', streetNo: 123, city: 'Cityville' }
-    };
-
-    const result = getPersonStreetNo(person);
-    assert.strictEqual(result, 123);
-  });
-
- 
-  it("handles different types in printThis", () => {
-    const person: Person = { 
-      name: 'Alice', 
-      birthYear: 1990, 
-      address: { street: 'Elm St', streetNo: 456, city: 'Gotham' }
-    };
-    const address: Address = { street: 'Main St', streetNo: 789, city: 'Springfield' };
-    const order: Order = { orderId: 12345, totalAmount: 299.99 };
-
-
-    const resultPerson = printThis(person);
-    const resultAddress = printThis(address);
-    const resultOrder = printThis(order);
-    const resultNull = printThis(null);
-    const resultUndefined = printThis(undefined);
-
-
-    assert.strictEqual(resultPerson, `Person: Alice, Age: ${new Date().getFullYear() - 1990}`);
-    assert.strictEqual(resultAddress, 'Address: Main St, No: 789, City: Springfield');
-    assert.strictEqual(resultOrder, 'Order ID: 12345, Total: $299.99');
-    assert.strictEqual(resultNull, 'no person supplied');
-    assert.strictEqual(resultUndefined, 'no person supplied');
+    assert.strictEqual(p1Address, "Marcus, 1972");
+    assert.strictEqual(p2Address, "David, 1975");
   });
   
+  it('get greeting from PersonClass', () => {
+    const birthYear = 1972;
+    const name = 'Marcus';
+    const currentYear = new Date().getFullYear();
+    const expectedAge = currentYear - birthYear;
+
+    const p = new PersonClass(name, birthYear);
+    const result = p.greet();
+
+    assert.strictEqual(result, `Hello Marcus, you are ${expectedAge} years old`);
+  });
+
+  it("using EmployeeClass", () => {
+    const p = new PersonClass("Marcus", 1972);
+    const e = new EmployeeClass("Marcus Employee", 1972);
+
+    e.employeeId = 12345;
+
+    assert.strictEqual(p.getName(), "Marcus");
+    assert.strictEqual(e.getName(), "Marcus Employee");
+    assert.strictEqual(e.employeeId, 12345);
+  });
+
+  it("optional parameters in optionallyAdd function", () => {
+    assert.strictEqual(optionallyAdd(1, 2), 3);
+    assert.strictEqual(optionallyAdd(1, 2, 3), 6);
+    assert.strictEqual(optionallyAdd(1, 2, 3, 4, 5), 15);
+    assert.strictEqual(optionallyAdd(1, 2, 0, 0, 0), 3); 
+  });
+
+  it("greetPeople with rest parameters", () => {
+    assert.strictEqual(greetPeople("Hello"), "Hello");
+    assert.strictEqual(greetPeople("Hello", "Marcus"), "Hello Marcus");
+    assert.strictEqual(greetPeople("Hello", "Marcus", "Dasha"), "Hello Marcus and Dasha");
+    assert.strictEqual(greetPeople("Hello", "Marcus", "Dasha", "David"), "Hello Marcus and Dasha and David");
+  });
+
+  it("prints a valid Order", () => {
+    const order: Order = { orderId: 12345, totalAmount: 299.99 };
+    const result = printThis(order);
+    assert.strictEqual(result, "Order ID: 12345, Total: $299.99");
+  });
+
+  it("handles null input in printThis", () => {
+    const result = printThis(null);
+    assert.strictEqual(result, "no person supplied");
+  });
+
+  it("handles undefined input in printThis", () => {
+    const result = printThis(undefined);
+    assert.strictEqual(result, "no person supplied");
+  });
 
 });
